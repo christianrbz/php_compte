@@ -2,8 +2,15 @@
 
 require_once "inc/init.php";
 
+// Restriction d'accès, si la personne n'est pas connectée alors je la redirige vers la page de connexion.
+// if( !isset($_SESSION['membre'])) {
+if( !isConnected()) {
+    header("location:connexion.php");
+    exit;
+} 
+
 // Pour vérifier si il y'a bien des données dans la $_SESSION
-// debug($_SESSION);
+debug($_SESSION);
 
 require_once "inc/header.php";
 
@@ -22,9 +29,9 @@ require_once "inc/header.php";
             <div class=" image d-flex flex-column justify-content-center align-items-center"> 
                 <button class="btn btn-secondary"> 
                     <img src="../02_repertoire/photos/boy.png" height="100" width="100" />
-                </button> 
+                </button>    
                 
-                <span class="name mt-3"><?= $_SESSION['membre']['firstname'] ?> <?= $_SESSION['membre']['lastname'] ?></span> 
+                <span class="name mt-3"><?= $_SESSION['membre']['firstname'] . " " . $_SESSION['membre']['lastname'] ?></span> 
                 
                 <span class="idd"><?= $_SESSION['membre']['username'] ?></span> 
                 
