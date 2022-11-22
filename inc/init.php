@@ -1,5 +1,9 @@
 <?php 
 
+// DECLARATION DE LA SESSION 
+// C'est obligatoire de le déclarer au tout début de notre site 
+session_start();
+
 try {
     
     $type_bdd = "mysql";
@@ -17,6 +21,7 @@ try {
 } catch (Exception $e) {
     die("ERREUR CONNEXION BDD : " . $e->getMessage());	
 }
+
 
 // Appel de mes fonctions 
 require_once "functions.php";
