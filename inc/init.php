@@ -22,6 +22,11 @@ try {
     die("ERREUR CONNEXION BDD : " . $e->getMessage());	
 }
 
+define( "RACINE_SITE", str_replace( "\\", "/", str_replace( "inc", "", __DIR__ ) ) );
+
+
+define("URL", "http://$_SERVER[HTTP_HOST]".str_replace($_SERVER['DOCUMENT_ROOT'], "", RACINE_SITE));
+
 
 // Appel de mes fonctions 
 require_once "functions.php";

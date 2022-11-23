@@ -13,3 +13,4 @@ function isConnected(): bool
 {
     return isset($_SESSION['membre']) ? TRUE : FALSE;
 }
+
