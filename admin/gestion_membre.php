@@ -2,6 +2,11 @@
 
 require_once "../inc/init.php";
 
+    if( !isAdmin() ){ 
+        header("location:../profil.php");
+        exit;
+    }
+
 // ETAPE de modification des données
      if( isset($_GET['action']) && $_GET['action'] == "modifier") { 
 
@@ -10,7 +15,7 @@ require_once "../inc/init.php";
         $requete->execute([":id" => $_GET['id_membre']]);
 
         $membre_select = $requete->fetch();
-        debug($membre_select);
+        // debug($membre_select);
 
         // Je vérifie si le formulaire a été validé 
         if ( !empty($_POST) ) {
@@ -45,7 +50,9 @@ require_once "../inc/init.php";
                 if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                     $errorMessage .= "L'email n'est pas valide<br>";
                 }
-
+                // in_array() permet de vérifier si une valeur est présente dans un tableau de données.
+                // Ici, si j'ai une valeur différente de 'user' ou 'admin' alors j'affiche un message d'erreur.
+                // Attention au select/option (menu déroulant). Si aucune option n'est sélectionnée, l'indice ne sera pas créé dans la superglobale $_POST. Il faudra donc vérifier s'il existe avant de l'utiliser
                 if (isset($_POST['status']) && !in_array($_POST['status'], ['user', 'admin'])) {
                     $errorMessage .= "Le status sélectionné n'est pas reconnu <br>";
                 }
@@ -56,7 +63,7 @@ require_once "../inc/init.php";
                 
                 // Update des données.
                 $requete = $bdd->prepare("UPDATE membre SET username = :username, lastname = :lastname, firstname = :firstname, email = :email, status = :status WHERE id = :id");
-                $requete->execute([
+                $success = $requete->execute([
                     ':username' => $_POST['username'],
                     ':lastname' => $_POST['lastname'],
                     ':firstname' => $_POST['firstname'],
@@ -65,6 +72,13 @@ require_once "../inc/init.php";
                     ':id' => $_GET['id_membre'],
 
                 ]);
+
+                if ($success) {
+                    $successMessage = "Le membre a bien été modifié !";
+                } else {
+                    $errorMessage = "Erreur lors de la modification";
+                }
+                
 
             }
             

@@ -10,7 +10,7 @@ if( !isConnected()) {
 } 
 
 // Pour vérifier si il y'a bien des données dans la $_SESSION
-debug($_SESSION);
+// debug($_SESSION);
 
 require_once "inc/header.php";
 

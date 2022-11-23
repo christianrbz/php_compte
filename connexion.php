@@ -73,7 +73,7 @@ if (isset($_POST['connexion'])) {
     
 }
 
-debug($_SESSION);
+// debug($_SESSION);
 
 require_once "inc/header.php";
 
